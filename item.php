@@ -60,14 +60,36 @@ class item {
     //TODO fill in the static function
 
     static function getItems(){
+        $db = new mysqli("localhost","ah_user","AuctionHelper", "auction"); //DB Conection
+        $query = "SELECT * FROM items";
+        $result = $db->query($query);
+        if(mysqli_num_rows($result) > 0 ){
+            $items = array();
+
+            while($row = $result->fetch_array(MYSQLI_ASSOC)){
+                $item = new item($row['itemid'], $row['name'], $row['description'], $row['resaleprice'], $row['winbidder'], $row['winprice']);
+                array_push( $itemsc, $item);
+
+            }
+            $db->close();
+            return $items;
+        }
+
+        else{
+            $db->close();
+            return NULL;
+        }
+
 
     }
 
     static function getItemsByBidder($bidderid){
+        
 
     }
 
     static function findItem($itemid){
+
 
     }
 
