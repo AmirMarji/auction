@@ -55,10 +55,20 @@ class item {
         return $result;
     }
 
-    // static function to get all items
+    // static functions
+
+    //TODO fill in the static function
 
     static function getItems(){
-        
+
+    }
+
+    static function getItemsByBidder($bidderid){
+
+    }
+
+    static function findItem($itemid){
+
     }
 
 }
