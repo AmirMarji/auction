@@ -59,6 +59,54 @@ class Bidder {
 
     }
 
+    //static functions to be called at anytime
     
+    static function getBidders(){
+        $db = new mysqli("localhost","ah_user","AuctionHelper", "auction"); //DB Conection
+        $query = "SELECT * FROM bidders";
+        $result = $db->query($query);
+        if(mysqli_num_rows($result) > 0 ){
+            $bidders = array();
+            while($row = $result->fetch_array(MYSQLI_ASSOC)){
+
+                $bidder = new Bidder($row['bidderid'], $row['lastname'], $row['firstname'], $row['address'], $row['phone']);
+                array_push($bidders, $bidder);
+                unset($bidder);                
+
+            }
+            $db->close();
+            return $bidders;
+        }
+
+        else{
+            $db->close();
+            return NULL;
+        }
+
+    }
+
+    static function findBidder($bidderid){ 
+
+        $db = new mysqli("localhost","ah_user","AuctionHelper", "auction"); //DB Conection
+        $query = "SELECT * FROM  bidders WHERE bidderid = bidderid"; // SQL
+        $result = $db->query($query);
+        $row = $result->fetch_array(MYSQLI_ASSOC);
+        if($row){
+
+            $bidder = new Bidder($row['bidderid'], $row['lastname'], $row['firstname'], $row['address'], $row['phone']);
+            $db->close();
+            return $bidder;
+
+        }
+
+        else{
+            $db->close();
+            return NULL;
+        }
+        
+
+    }
 
 }
+
+?>
