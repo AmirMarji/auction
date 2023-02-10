@@ -87,9 +87,21 @@ class item {
         $db = new mysqli("localhost","ah_user","AuctionHelper", "auction"); //DB Conection
         $query = "SELECT * FROM items WHERE winbidder = $bidderid";
         $result = $db->query($query);
-        if(mysqli_num_rows($result)> 0){
+        if(mysqli_num_rows($result) > 0 ){
             $items = array();
 
+            while($row = $result->fetch_array(MYSQLI_ASSOC)){
+                $item = new item($row['itemid'], $row['name'], $row['description'], $row['resaleprice'], $row['winbidder'], $row['winprice']);
+                array_push( $itemsc, $item);
+
+            }
+            $db->close();
+            return $items;
+        }
+
+        else{
+            $db->close();
+            return NULL;
         }
 
 
@@ -97,12 +109,21 @@ class item {
 
     static function findItem($itemid){
         $db = new mysqli("localhost","ah_user","AuctionHelper", "auction"); //DB Conection
+        $query = "SELECT * FROM items WHERE itemid = $itemid";
+        $result = $db->query($query);
+        if(mysqli_num_rows($result) > 0 ){
+            $row = $result->fetch_array(MYSQLI_ASSOC);
+            $item = new item($row['itemid'], $row['name'], $row['description'], $row['resaleprice'], $row['winbidder'], $row['winprice']);
+            $db->close();
+            return $item;
+        }
+
+        else{
+            $db->close();
+            return NULL;
+        }
 
 
     }
 
 }
-
-
-
-?>
