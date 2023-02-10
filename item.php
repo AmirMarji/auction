@@ -84,11 +84,19 @@ class item {
     }
 
     static function getItemsByBidder($bidderid){
-        
+        $db = new mysqli("localhost","ah_user","AuctionHelper", "auction"); //DB Conection
+        $query = "SELECT * FROM items WHERE winbidder = $bidderid";
+        $result = $db->query($query);
+        if(mysqli_num_rows($result)> 0){
+            $items = array();
+
+        }
+
 
     }
 
     static function findItem($itemid){
+        $db = new mysqli("localhost","ah_user","AuctionHelper", "auction"); //DB Conection
 
 
     }
